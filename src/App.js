@@ -1,4 +1,5 @@
 import React from 'react';
+import Input from './components/Input';
 import logo from './logo.svg';
 import './App.css';
 
@@ -10,6 +11,10 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
+        <Input
+        type="test-type"
+        placeholder="test-placeholder"
+        />
         <a
           className="App-link"
           href="https://reactjs.org"
