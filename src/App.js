@@ -1,5 +1,5 @@
 import React from 'react';
-import Input from './components/Input';
+import WeaponTypeList from './components/WeaponTypeList';
 import logo from './logo.svg';
 import './App.css';
 
@@ -11,18 +11,7 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <Input
-        type="test-type"
-        placeholder="test-placeholder"
-        />
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <WeaponTypeList />
       </header>
     </div>
   );
