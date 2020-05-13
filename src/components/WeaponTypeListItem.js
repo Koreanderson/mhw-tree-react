@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 class WeaponTypeListItem extends React.Component {
 
@@ -9,9 +10,16 @@ class WeaponTypeListItem extends React.Component {
 
   render() {
     const icon = './icons/' + this.props.weaponType + '.png';
+    const Item = styled.li`
+      align-items: center;
+      color: white;
+      display: flex;
+      margin: 1em 0;
+      list-style: none;
+    `
 
     return (
-      <li className="icon--weapon" onClick={this.handleClick}><img style={{width: '40px', height: '40px'}} src={icon}/>{this.props.weaponType}</li>
+      <Item onClick={this.handleClick}><img style={{width: '40px', height: '40px'}} src={icon}/>{this.props.weaponType}</Item>
     );
   }
 
