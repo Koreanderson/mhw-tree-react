@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import WeaponSelect from './components/WeaponSelect';
 import WeaponTypeList from './components/WeaponTypeList';
 import DamageTypeList from './components/DamageTypeList';
 import logo from './logo.svg';
@@ -12,10 +13,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Row>
-          <WeaponTypeList />
-          <DamageTypeList />
-        </Row>
+        <WeaponSelect />
       </header>
     </div>
   );
