@@ -4,6 +4,13 @@ import WeaponTypeList from '../components/WeaponTypeList'
 import DamageTypeList from '../components/DamageTypeList'
 
 class WeaponSelect extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      weaponType: '',
+      damageType: ''
+    }
+  }
   render() {
     const Row = styled.div`
       display: flex;

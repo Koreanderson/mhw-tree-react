@@ -5,6 +5,13 @@ class WeaponTypeList extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {weaponType: ''};
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e) {
+    const weaponType = e.target.attributes.weapontype.value;
+    this.setState({weaponType: weaponType});
   }
 
   render() {
@@ -24,8 +31,9 @@ class WeaponTypeList extends React.Component {
       'heavy-bowgun',
       'bow'
     ];
+
     const weaponTypeList = weaponTypes.map((weaponType,i) => 
-      <WeaponTypeListItem weaponType={weaponType} key={i} />
+      <li onClick={this.handleClick} weapontype={weaponType}>{weaponType}</li>
     );
 
     return (
