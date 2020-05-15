@@ -6,8 +6,10 @@ import DamageTypeList from '../components/DamageTypeList'
 class WeaponSelect extends React.Component {
   constructor(props) {
     super(props);
+    this.buildUrl = this.buildUrl.bind(this);
+    this.setWeaponType = this.setWeaponType.bind(this);
     this.state = {
-      weaponType: '',
+      weaponType: 'great-sword',
       damageType: ''
     }
   }
@@ -16,11 +18,23 @@ class WeaponSelect extends React.Component {
       display: flex;
     `
     return(
-      <Row>
-        <WeaponTypeList />
-        <DamageTypeList />
+      <Row >
+        <WeaponTypeList handleWeaponClick={this.setWeaponType}/>
+        <DamageTypeList handleDamageClick={this.setDamageType} />
       </Row>
     );
+  }
+
+  setWeaponType(weaponType) {
+    console.log(weaponType);
+  }
+
+  setDamageType(damageType) {
+    console.log(damageType);
+  }
+
+  buildUrl() {
+
   }
 }
 export default WeaponSelect;

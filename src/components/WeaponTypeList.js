@@ -1,17 +1,20 @@
 import React from 'react';
-import WeaponTypeListItem from '../components/WeaponTypeListItem';
+//import WeaponTypeListItem from '../components/WeaponTypeListItem';
 
 class WeaponTypeList extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {weaponType: ''};
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(e) {
     const weaponType = e.target.attributes.weapontype.value;
-    this.setState({weaponType: weaponType});
+    this.props.handleWeaponClick(weaponType);
+  }
+
+  componentDidMount() {
+    console.log('component mount');
   }
 
   render() {
@@ -32,8 +35,9 @@ class WeaponTypeList extends React.Component {
       'bow'
     ];
 
+
     const weaponTypeList = weaponTypes.map((weaponType,i) => 
-      <li onClick={this.handleClick} weapontype={weaponType}>{weaponType}</li>
+      <li onClick={this.handleClick} key={i} weapontype={weaponType}>{weaponType}</li>
     );
 
     return (
