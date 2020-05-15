@@ -8,12 +8,14 @@ class WeaponSelect extends React.Component {
     super(props);
     this.buildUrl = this.buildUrl.bind(this);
     this.setWeaponType = this.setWeaponType.bind(this);
+    this.setDamageType = this.setWeaponType.bind(this);
     this.state = {
       weaponType: 'great-sword',
-      damageType: ''
+      damageType: 'poison'
     }
   }
   render() {
+    console.log(this.state);
     const Row = styled.div`
       display: flex;
     `
@@ -26,11 +28,11 @@ class WeaponSelect extends React.Component {
   }
 
   setWeaponType(weaponType) {
-    console.log(weaponType);
+    this.setState({weaponType: weaponType});
   }
 
   setDamageType(damageType) {
-    console.log(damageType);
+    this.setState({damageType: damageType});
   }
 
   buildUrl() {

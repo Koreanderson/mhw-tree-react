@@ -1,5 +1,4 @@
 import React from 'react';
-//import WeaponTypeListItem from '../components/WeaponTypeListItem';
 
 class WeaponTypeList extends React.Component {
 
@@ -11,10 +10,6 @@ class WeaponTypeList extends React.Component {
   handleClick(e) {
     const weaponType = e.target.attributes.weapontype.value;
     this.props.handleWeaponClick(weaponType);
-  }
-
-  componentDidMount() {
-    console.log('component mount');
   }
 
   render() {
@@ -34,7 +29,6 @@ class WeaponTypeList extends React.Component {
       'heavy-bowgun',
       'bow'
     ];
-
 
     const weaponTypeList = weaponTypes.map((weaponType,i) => 
       <li onClick={this.handleClick} key={i} weapontype={weaponType}>{weaponType}</li>
