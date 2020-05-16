@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 class WeaponTypeList extends React.Component {
 
@@ -29,15 +30,19 @@ class WeaponTypeList extends React.Component {
       'heavy-bowgun',
       'bow'
     ];
+    const Ul = styled.ul`
+      list-style-type: none;
+      text-align: left;
+    `
 
     const weaponTypeList = weaponTypes.map((weaponType,i) => 
       <li onClick={this.handleClick} key={i} weapontype={weaponType}>{weaponType}</li>
     );
 
     return (
-      <ul className="weapon-types">
+      <Ul className="weapon-types">
         {weaponTypeList}
-      </ul>
+      </Ul>
     );
   }
 }

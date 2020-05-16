@@ -1,5 +1,5 @@
 import React from 'react';
-//import DamageTypeListItem from '../components/DamageTypeListItem';
+import styled from 'styled-components';
 
 class DamageTypeList extends React.Component {
 
@@ -9,8 +9,18 @@ class DamageTypeList extends React.Component {
   }
 
   handleClick(e) {
+
     const damageType = e.target.attributes.damageType.value;
+    const el = e.target;
+    const listItems = document.querySelectorAll('.damage-types--item');
+
     this.props.handleDamageClick(damageType);
+    console.log(damageType);
+
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(this.state);
   }
 
   render() {
@@ -26,14 +36,19 @@ class DamageTypeList extends React.Component {
       'paralysis'
     ];
 
+    const Ul = styled.ul`
+      list-style-type: none;
+      text-align: left;
+    `
+
     const damageTypeList = damageTypes.map((damageType,i) => 
-      <li onClick={this.handleClick} key={i} damagetype={damageType}>{damageType}</li>
+      <li className="damage-types--item" onClick={this.handleClick} key={i} damagetype={damageType}>{damageType}</li>
     );
 
     return (
-      <ul className="damage-types">
+      <Ul className="damage-types">
         {damageTypeList}
-      </ul>
+      </Ul>
     );
   }
 }
