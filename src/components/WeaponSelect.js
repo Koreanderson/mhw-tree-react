@@ -46,7 +46,7 @@ class WeaponSelect extends React.Component {
     return(
       <div>
         <Row>
-          <Button onClick={this.getWeaponResults}>Anesis's Dope Button</Button>
+          <Button onClick={this.getWeaponResults}>Show Results</Button>
         </Row>
         <Row >
           <WeaponTypeList handleWeaponClick={this.setWeaponType} selectedWeaponType={this.state.weaponType}/>
