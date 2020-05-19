@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import DamageTypeList from '../components/DamageTypeList';
+import Inventory from '../components/Inventory';
+import SelectedWeaponList from '../components/SelectedWeaponList';
 import WeaponList from '../components/WeaponList';
 import WeaponTypeList from '../components/WeaponTypeList';
-import DamageTypeList from '../components/DamageTypeList';
-import SelectedWeaponList from '../components/SelectedWeaponList';
+import Wishlist from '../components/Wishlist';
 
 class WeaponSelect extends React.Component {
 
@@ -15,7 +17,7 @@ class WeaponSelect extends React.Component {
     this.state = {
       weaponType: 'great-sword',
       damageType: 'poison',
-      currentWeaponList: [] 
+      filteredWeaponList: []
     }
   }
 
@@ -48,10 +50,14 @@ class WeaponSelect extends React.Component {
         <Row>
           <Button onClick={this.getWeaponResults}>Show Results</Button>
         </Row>
+        <Row>
+          <Inventory />
+          <Wishlist />
+        </Row>
         <Row >
           <WeaponTypeList handleWeaponClick={this.setWeaponType} selectedWeaponType={this.state.weaponType}/>
           <DamageTypeList handleDamageClick={this.setDamageType} selectedDamageType={this.state.damageType}/>
-          <WeaponList selectedWeaponList={this.state.currentWeaponList} />
+          <WeaponList selectedWeaponList={this.state.filteredWeaponList} />
         </Row>
       </div>
     );
@@ -59,7 +65,7 @@ class WeaponSelect extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('state: ' + this.state.currentWeaponList[0]);
+    console.log('state: ' + this.state.filteredWeaponList[0]);
     this.displayWeaponResults();
   }
 
@@ -69,7 +75,7 @@ class WeaponSelect extends React.Component {
 
   displayWeaponResults() {
     //console.log('display weapon results');
-    const weaponList = this.state.currentWeaponList;
+    const weaponList = this.state.filteredWeaponList;
     weaponList.map((weapon) => {
       //console.log(weapon);
     });
@@ -90,7 +96,7 @@ class WeaponSelect extends React.Component {
 
     console.log(json);
 
-    this.setState({currentWeaponList: json});
+    this.setState({filteredWeaponList: json});
 
     // shit is firing during state update  
     // So don't change state here...
