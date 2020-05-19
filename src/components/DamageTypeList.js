@@ -39,10 +39,19 @@ class DamageTypeList extends React.Component {
     const Ul = styled.ul`
       list-style-type: none;
       text-align: left;
+      li {
+        cursor: pointer;
+        margin: .5em;
+        padding: .25em .5em;
+      }
+      .selected { 
+        border: 1px solid white;
+      }
     `
+    const currentDamageType = this.props.selectedDamageType;
 
     const damageTypeList = damageTypes.map((damageType,i) => 
-      <li className="damage-types--item" onClick={this.handleClick} key={i} damagetype={damageType}>{damageType}</li>
+      <li className={"damage-types--item " + (currentDamageType == damageType ? 'selected' : '')} onClick={this.handleClick} key={i} damagetype={damageType}>{damageType}</li>
     );
 
     return (

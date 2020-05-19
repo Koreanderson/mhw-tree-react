@@ -33,10 +33,22 @@ class WeaponTypeList extends React.Component {
     const Ul = styled.ul`
       list-style-type: none;
       text-align: left;
+      li {
+        cursor: pointer;
+        margin: .5em;
+        padding: .25em .5em;
+      }
+      .selected { 
+        border: 1px solid white;
+      }
     `
 
+    const currentWeaponType = this.props.selectedWeaponType;
+    console.log(this.props.selectedWeaponType);
+
+
     const weaponTypeList = weaponTypes.map((weaponType,i) => 
-      <li onClick={this.handleClick} key={i} weapontype={weaponType}>{weaponType}</li>
+      <li className={(currentWeaponType == weaponType ? 'selected' : '' )} onClick={this.handleClick} key={i} weapontype={weaponType}>{weaponType}</li>
     );
 
     return (
