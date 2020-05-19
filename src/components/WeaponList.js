@@ -30,9 +30,6 @@ class WeaponList extends React.Component {
       }
     `
 
-
-
-
     const selectedWeaponListEl = selectedWeaponList.map((weapon, i) => 
       <li>
         {weapon.name}

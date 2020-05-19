@@ -17,7 +17,8 @@ class WeaponSelect extends React.Component {
     this.state = {
       weaponType: 'great-sword',
       damageType: 'poison',
-      filteredWeaponList: []
+      filteredWeaponList: [],
+      inventoryList: ['Dear Hecatel']
     }
   }
 
@@ -51,7 +52,7 @@ class WeaponSelect extends React.Component {
           <Button onClick={this.getWeaponResults}>Show Results</Button>
         </Row>
         <Row>
-          <Inventory />
+          <Inventory handleInventoryItemClick={this.removeItemFromInventory} inventoryList={this.state.inventoryList} />
           <Wishlist />
         </Row>
         <Row >
@@ -80,6 +81,10 @@ class WeaponSelect extends React.Component {
       //console.log(weapon);
     });
     //console.log('display weapon list state' + weaponList);
+  }
+
+  removeItemFromInventory(item) {
+    console.log('removing: ' + item);
   }
 
   setDamageType(damageType) {
