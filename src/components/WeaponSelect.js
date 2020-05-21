@@ -15,11 +15,12 @@ class WeaponSelect extends React.Component {
     this.setDamageType = this.setDamageType.bind(this);
     this.getWeaponResults = this.getWeaponResults.bind(this);
     this.addItemToInventory = this.addItemToInventory.bind(this);
+    this.setInventoryToLocalStorage = this.setInventoryToLocalStorage.bind(this);
     this.state = {
       weaponType: 'great-sword',
       damageType: 'poison',
       filteredWeaponList: [],
-      inventoryList: ['Dear Hecatel']
+      inventoryList: ['Dear Hecatel', 'Buster Blade 3']
     }
   }
 
@@ -46,6 +47,7 @@ class WeaponSelect extends React.Component {
         border-color: #CFEE1D;
       }
     `
+
 
     return(
       <div>
@@ -83,6 +85,20 @@ class WeaponSelect extends React.Component {
     this.setState({weaponType: weaponType});
   }
 
+  getInventoryFromLocalStorage() {
+
+    const localStorageInventory = localStorage.getItem('inventory').split(',');
+    const inventory = this.state.inventoryList;
+
+    if(!localStorage.getItem('inventory')) {
+      // No Inventory Set
+      localStorage.setItem('inventory', this.state.inventoryList);
+    } else if(inventory != localStorageInventory)  {
+      // If state and local storage differ, update state
+      this.setState({'inventoryList':localStorageInventory});
+    }
+  }
+
   displayWeaponResults() {
     //console.log('display weapon results');
     const weaponList = this.state.filteredWeaponList;
@@ -93,7 +109,15 @@ class WeaponSelect extends React.Component {
   }
 
   addItemToInventory(item) {
+    console.log(this.state.inventoryList);
+    let inventory = this.state.inventoryList;
+    inventory.push(item);
+    console.log(inventory);
+    this.setState({inventoryList: inventory});
+
     console.log('adding: ' + item + ' to inventory');
+    this.setInventoryToLocalStorage();
+
   }
 
   removeItemFromInventory(item) {
