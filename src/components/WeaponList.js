@@ -4,7 +4,14 @@ import styled from 'styled-components';
 class WeaponList extends React.Component {
   constructor(props) {
     super(props);
+    this.addWeaponToInventory = this.addWeaponToInventory.bind(this);
   }
+
+  addWeaponToInventory(weapon) {
+    console.log('test');
+    this.props.inventoryAddAction(weapon);
+  }
+
   render() {
     const selectedWeaponList = this.props.selectedWeaponList;
     const Ul = styled.ul`
@@ -33,7 +40,7 @@ class WeaponList extends React.Component {
     const selectedWeaponListEl = selectedWeaponList.map((weapon, i) => 
       <li>
         {weapon.name}
-        <Button>Add to Inventory</Button>
+        <Button onClick={()=>this.addWeaponToInventory(weapon.name)}>Add to Inventory</Button>
         <Button>Add to Wishlist</Button>
       </li>
       //this is firing twice on render. WHY?

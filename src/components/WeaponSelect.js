@@ -14,6 +14,7 @@ class WeaponSelect extends React.Component {
     this.setWeaponType = this.setWeaponType.bind(this);
     this.setDamageType = this.setDamageType.bind(this);
     this.getWeaponResults = this.getWeaponResults.bind(this);
+    this.addItemToInventory = this.addItemToInventory.bind(this);
     this.state = {
       weaponType: 'great-sword',
       damageType: 'poison',
@@ -56,9 +57,18 @@ class WeaponSelect extends React.Component {
           <Wishlist />
         </Row>
         <Row >
-          <WeaponTypeList handleWeaponClick={this.setWeaponType} selectedWeaponType={this.state.weaponType}/>
-          <DamageTypeList handleDamageClick={this.setDamageType} selectedDamageType={this.state.damageType}/>
-          <WeaponList selectedWeaponList={this.state.filteredWeaponList} />
+          <WeaponTypeList 
+            handleWeaponClick={this.setWeaponType} 
+            selectedWeaponType={this.state.weaponType}
+          />
+          <DamageTypeList 
+            handleDamageClick={this.setDamageType} 
+            selectedDamageType={this.state.damageType}
+          />
+          <WeaponList 
+            selectedWeaponList={this.state.filteredWeaponList} 
+            inventoryAddAction={this.addItemToInventory}
+          />
         </Row>
       </div>
     );
@@ -83,6 +93,10 @@ class WeaponSelect extends React.Component {
     //console.log('display weapon list state' + weaponList);
   }
 
+  addItemToInventory(item) {
+    console.log(item);
+  }
+
   removeItemFromInventory(item) {
     console.log('removing: ' + item);
   }
@@ -102,10 +116,6 @@ class WeaponSelect extends React.Component {
     console.log(json);
 
     this.setState({filteredWeaponList: json});
-
-    // shit is firing during state update  
-    // So don't change state here...
-
   }
 
 
