@@ -8,7 +8,6 @@ class WeaponList extends React.Component {
   }
 
   addWeaponToInventory(weapon) {
-    console.log('test');
     this.props.inventoryAddAction(weapon);
   }
 

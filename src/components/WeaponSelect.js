@@ -76,7 +76,6 @@ class WeaponSelect extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('state: ' + this.state.filteredWeaponList[0]);
     this.displayWeaponResults();
   }
 
@@ -94,7 +93,7 @@ class WeaponSelect extends React.Component {
   }
 
   addItemToInventory(item) {
-    console.log(item);
+    console.log('adding: ' + item + ' to inventory');
   }
 
   removeItemFromInventory(item) {
