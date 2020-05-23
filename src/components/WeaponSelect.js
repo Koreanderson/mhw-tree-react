@@ -15,12 +15,12 @@ class WeaponSelect extends React.Component {
     this.setDamageType = this.setDamageType.bind(this);
     this.getWeaponResults = this.getWeaponResults.bind(this);
     this.addItemToInventory = this.addItemToInventory.bind(this);
-    this.setInventoryToLocalStorage = this.setInventoryToLocalStorage.bind(this);
+    this.setInventoryFromLocalStorage = this.setInventoryFromLocalStorage.bind(this);
     this.state = {
       weaponType: 'great-sword',
       damageType: 'poison',
       filteredWeaponList: [],
-      inventoryList: ['Dear Hecatel', 'Buster Blade 3']
+      inventoryList: []
     }
   }
 
@@ -77,6 +77,11 @@ class WeaponSelect extends React.Component {
 
   }
 
+  componentDidMount() {
+    this.setInventoryFromLocalStorage();
+
+  }
+
   componentDidUpdate(prevProps, prevState) {
     this.displayWeaponResults();
   }
@@ -85,7 +90,8 @@ class WeaponSelect extends React.Component {
     this.setState({weaponType: weaponType});
   }
 
-  getInventoryFromLocalStorage() {
+  setInventoryFromLocalStorage() {
+    console.log('Setting inventory from local storage...');
 
     const localStorageInventory = localStorage.getItem('inventory').split(',');
     const inventory = this.state.inventoryList;
@@ -97,6 +103,19 @@ class WeaponSelect extends React.Component {
       // If state and local storage differ, update state
       this.setState({'inventoryList':localStorageInventory});
     }
+    console.log('Done.');
+    
+  }
+
+  storeInventory() {
+    const localStorageInventory = localStorage.getItem('inventory').split(',');
+    const inventory = this.state.inventoryList;
+
+    if(inventory != localStorageInventory)  {
+      localStorage.setItem('inventory', inventory);
+    }
+
+    console.log('state:' + inventory);
   }
 
   displayWeaponResults() {
@@ -105,7 +124,6 @@ class WeaponSelect extends React.Component {
     weaponList.map((weapon) => {
       //console.log(weapon);
     });
-    //console.log('display weapon list state' + weaponList);
   }
 
   addItemToInventory(item) {
@@ -116,7 +134,8 @@ class WeaponSelect extends React.Component {
     this.setState({inventoryList: inventory});
 
     console.log('adding: ' + item + ' to inventory');
-    this.setInventoryToLocalStorage();
+    this.setInventoryFromLocalStorage();
+    this.storeInventory();
 
   }
 
