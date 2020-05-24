@@ -38,7 +38,7 @@ const WeaponList = (props) => {
       <li>
         {weapon.name}
         {!inInventory && 
-          <Button weapon={weapon.name} onClick={()=>this.addWeaponToInventory(weapon.name)}>Add to Inventory</Button>
+          <Button weapon={weapon.name} onClick={()=>addWeaponToInventory(weapon.name)}>Add to Inventory</Button>
         }
         <Button>Add to Wishlist</Button>
       </li>
