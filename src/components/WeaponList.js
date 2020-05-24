@@ -36,17 +36,25 @@ class WeaponList extends React.Component {
       }
     `
 
-    const selectedWeaponListEl = selectedWeaponList.map((weapon, i) => 
-      <li>
-        {weapon.name}
-        <Button onClick={()=>this.addWeaponToInventory(weapon.name)}>Add to Inventory</Button>
-        <Button>Add to Wishlist</Button>
-      </li>
-      //this is firing twice on render. WHY?
-    );
+    const currentInventory = this.props.currentInventory;
+    console.log('current inventory:' + currentInventory);
+
+    const selectedWeaponListEl = selectedWeaponList.map((weapon, i) => {
+      const inInventory = currentInventory.indexOf(weapon.name) > -1;
+      console.log(inInventory);
+      return( 
+        <li>
+          {weapon.name}
+          {!inInventory && 
+            <Button weapon={weapon.name} onClick={()=>this.addWeaponToInventory(weapon.name)}>Add to Inventory</Button>}
+
+          <Button>Add to Wishlist</Button>
+        </li>
+      )
+    });
 
     return(
-      <Ul>
+      <Ul className='weapon-list'>
         {selectedWeaponListEl}
       </Ul>
     );

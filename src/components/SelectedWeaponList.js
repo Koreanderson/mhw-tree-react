@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 class SelectedWeaponList extends React.Component {
 
   constructor(props) {
@@ -24,6 +25,7 @@ class SelectedWeaponList extends React.Component {
     );
 
   }
+
   handleClick() {
     console.log('click');
   }

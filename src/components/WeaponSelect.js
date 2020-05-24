@@ -68,6 +68,7 @@ class WeaponSelect extends React.Component {
             selectedDamageType={this.state.damageType}
           />
           <WeaponList 
+            currentInventory={this.state.inventoryList}
             selectedWeaponList={this.state.filteredWeaponList} 
             inventoryAddAction={this.addItemToInventory}
           />
@@ -79,7 +80,6 @@ class WeaponSelect extends React.Component {
 
   componentDidMount() {
     this.setInventoryFromLocalStorage();
-
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -127,7 +127,6 @@ class WeaponSelect extends React.Component {
   }
 
   addItemToInventory(item) {
-    console.log(this.state.inventoryList);
     let inventory = this.state.inventoryList;
     inventory.push(item);
     console.log(inventory);
