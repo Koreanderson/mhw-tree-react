@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import DamageTypeList from '../components/DamageTypeList';
 import Inventory from '../components/Inventory';
@@ -6,75 +6,90 @@ import WeaponList from '../components/WeaponList';
 import WeaponTypeList from '../components/WeaponTypeList';
 import Wishlist from '../components/Wishlist';
 
-class WeaponSelect extends React.Component {
+const WeaponSelect = (props) => {
+  const [weaponType, setWeaponType] = useState('great-sword');
+  const [damageType, setDamageType] = useState('poison');
+  const [filteredWeaponList, setFilteredWeaponList] = useState([]);
+  const [inventoryList, setInventoryList] = useState([]);
 
-  constructor(props) {
-    super(props);
-    this.setWeaponType = this.setWeaponType.bind(this);
-    this.setDamageType = this.setDamageType.bind(this);
-    this.getWeaponResults = this.getWeaponResults.bind(this);
-    this.addItemToInventory = this.addItemToInventory.bind(this);
-    this.setInventoryFromLocalStorage = this.setInventoryFromLocalStorage.bind(this);
-    this.state = {
-      weaponType: 'great-sword',
-      damageType: 'poison',
-      filteredWeaponList: [],
-      inventoryList: []
+  const Row = styled.div`
+    display: flex;
+  `
+  const Button = styled.button`
+
+    background: rgba(20, 20, 20, 0.5);
+    border: 1px solid #ffffff;
+    color: white;
+    cursor: pointer;
+    display: block;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin: 0 auto;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    &:hover {
+      color: #CFEE1D;
+      border-color: #CFEE1D;
     }
+  `
+  const setInventoryFromLocalStorage = () => {
+    console.log('Setting inventory from local storage...');
+
+    const localStorageInventory = localStorage.getItem('inventory').split(',');
+    //const inventory = this.state.inventoryList;
+    const inventory = inventoryList;
+
+    if(!localStorage.getItem('inventory')) {
+      // No Inventory Set
+      localStorage.setItem('inventory', inventoryList);
+    } else if(inventory != localStorageInventory)  {
+      // If state and local storage differ, update state
+      //this.setState({'inventoryList':localStorageInventory});
+      setInventoryList(localStorageInventory);
+    }
+    console.log('Done.');
+    
   }
 
-  render() {
+  const removeItemFromInventory = (item) => {
+    console.log('removing: ' + item);
+  }
 
-    const Row = styled.div`
-      display: flex;
-    `
-    const Button = styled.button`
+  const storeInventory = () => {
+    const localStorageInventory = localStorage.getItem('inventory').split(',');
+    //const inventory = this.state.inventoryList;
+    const inventory = inventoryList;
 
-      background: rgba(20, 20, 20, 0.5);
-      border: 1px solid #ffffff;
-      color: white;
-      cursor: pointer;
-      display: block;
-      font-family: 'Noto Sans', sans-serif;
-      font-size: 14px;
-      letter-spacing: 1px;
-      margin: 0 auto;
-      text-transform: uppercase;
-      padding: 10px 20px;
-      &:hover {
-        color: #CFEE1D;
-        border-color: #CFEE1D;
-      }
-    `
+    if(inventory != localStorageInventory)  {
+      localStorage.setItem('inventory', inventory);
+    }
+  }
+  const getWeaponResults = async () => {
+    //const damageType = this.state.damageType;
+    //const weaponType = this.state.weaponType;
+    const url = 'https://mhw-db.com/weapons?q={"type":"' + weaponType + '","elements.type":"' + damageType + '"}';
+    const response = await fetch(url);
+    const json = await response.json();
+    //this.setState({filteredWeaponList: json});
+    setFilteredWeaponList(json);
+  }
 
+  const addItemToInventory = (item) => {
+    let inventory = inventoryList;
+    inventory.push(item);
+    console.log(inventory);
+    setInventoryList(inventory);
+    //this.setState({inventoryList: inventory});
 
-    return(
-      <div>
-        <Row>
-          <Button onClick={this.getWeaponResults}>Show Results</Button>
-        </Row>
-        <Row>
-          <Inventory handleInventoryItemClick={this.removeItemFromInventory} inventoryList={this.state.inventoryList} />
-          <Wishlist />
-        </Row>
-        <Row >
-          <WeaponTypeList 
-            handleWeaponClick={this.setWeaponType} 
-            selectedWeaponType={this.state.weaponType}
-          />
-          <DamageTypeList 
-            handleDamageClick={this.setDamageType} 
-            selectedDamageType={this.state.damageType}
-          />
-          <WeaponList 
-            currentInventory={this.state.inventoryList}
-            selectedWeaponList={this.state.filteredWeaponList} 
-            inventoryAddAction={this.addItemToInventory}
-          />
-        </Row>
-      </div>
-    );
+    console.log('adding: ' + item + ' to inventory');
+    this.setInventoryFromLocalStorage();
+    this.storeInventory();
 
+  }
+
+  const handleDamageClick = (damageType) => {
+    setDamageType(damageType);
   }
 
   componentDidMount() {
@@ -89,75 +104,32 @@ class WeaponSelect extends React.Component {
     this.setState({weaponType: weaponType});
   }
 
-  setInventoryFromLocalStorage() {
-    console.log('Setting inventory from local storage...');
-
-    const localStorageInventory = localStorage.getItem('inventory').split(',');
-    const inventory = this.state.inventoryList;
-
-    if(!localStorage.getItem('inventory')) {
-      // No Inventory Set
-      localStorage.setItem('inventory', this.state.inventoryList);
-    } else if(inventory != localStorageInventory)  {
-      // If state and local storage differ, update state
-      this.setState({'inventoryList':localStorageInventory});
-    }
-    console.log('Done.');
-    
-  }
-
-  storeInventory() {
-    const localStorageInventory = localStorage.getItem('inventory').split(',');
-    const inventory = this.state.inventoryList;
-
-    if(inventory != localStorageInventory)  {
-      localStorage.setItem('inventory', inventory);
-    }
-
-    console.log('state:' + inventory);
-  }
-
-  displayWeaponResults() {
-    //console.log('display weapon results');
-    const weaponList = this.state.filteredWeaponList;
-    weaponList.map((weapon) => {
-      //console.log(weapon);
-    });
-  }
-
-  addItemToInventory(item) {
-    let inventory = this.state.inventoryList;
-    inventory.push(item);
-    console.log(inventory);
-    this.setState({inventoryList: inventory});
-
-    console.log('adding: ' + item + ' to inventory');
-    this.setInventoryFromLocalStorage();
-    this.storeInventory();
-
-  }
-
-  removeItemFromInventory(item) {
-    console.log('removing: ' + item);
-  }
-
-  setDamageType(damageType) {
-    this.setState({damageType: damageType});
-  }
-
-  async getWeaponResults() {
-
-    const damageType = this.state.damageType;
-    const weaponType = this.state.weaponType;
-    const url = 'https://mhw-db.com/weapons?q={"type":"' + weaponType + '","elements.type":"' + damageType + '"}';
-    const response = await fetch(url);
-    const json = await response.json();
-
-    console.log(json);
-
-    this.setState({filteredWeaponList: json});
-  }
-
+  return(
+    <div>
+      <Row>
+        <Button onClick={getWeaponResults}>Show Results</Button>
+      </Row>
+      <Row>
+        <Inventory handleInventoryItemClick={removeItemFromInventory} inventoryList={state.inventoryList} />
+        <Wishlist />
+      </Row>
+      <Row >
+        <WeaponTypeList 
+          handleWeaponClick={setWeaponType} 
+          selectedWeaponType={weaponType}
+        />
+        <DamageTypeList 
+          handleDamageClick={handleDamageClick} 
+          selectedDamageType={damageType}
+        />
+        <WeaponList 
+          currentInventory={inventoryList}
+          selectedWeaponList={filteredWeaponList} 
+          inventoryAddAction={addItemToInventory}
+        />
+      </Row>
+    </div>
+  );
 
 }
 
