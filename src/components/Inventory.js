@@ -1,27 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-class Inventory extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(weapon) {
-    this.props.handleInventoryItemClick(weapon);
-  }
-
-  render() {
+const Inventory = (props) => {
     const Ul = styled.ul`
       list-style-type: none;
       text-align: left;
-
       li {
         align-items: center;
         display: flex;
       }
-
       button {
         margin: 5px;
       }
@@ -41,24 +28,25 @@ class Inventory extends React.Component {
         border-color: #CFEE1D;
       }
     `
-
-    const inventory = this.props.inventoryList;
-    const inventoryList = inventory.map((weapon, i ) =>
-      <li key={i}>
-        <span>{weapon} </span>
-        <Button onClick={()=>this.handleClick(weapon)}> Remove</Button>
-      </li>
-    );
-
-    return (
-      <div>
-        Inventory
-        <Ul>
-          { inventoryList }
-        </Ul>
-      </div>
-    );
+  const handleClick = (weapon) => {
+    props.handleInventoryItemClick(weapon);
   }
+  const inventory = props.inventoryList;
+  const inventoryList = inventory.map((weapon, i ) =>
+    <li key={i}>
+      <span>{weapon} </span>
+      <Button onClick={()=>handleClick(weapon)}> Remove</Button>
+    </li>
+  );
+
+  return(
+    <div>
+      Inventory
+      <Ul>
+        {inventoryList}
+      </Ul>
+    </div>
+  );
 }
 
 export default Inventory;
