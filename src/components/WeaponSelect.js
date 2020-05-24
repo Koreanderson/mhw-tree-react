@@ -7,10 +7,13 @@ import WeaponTypeList from '../components/WeaponTypeList';
 import Wishlist from '../components/Wishlist';
 
 const WeaponSelect = (props) => {
+
+  const localStorageInventory = localStorage.getItem('inventory').split(',');
+
   const [weaponType, setWeaponType] = useState('great-sword');
   const [damageType, setDamageType] = useState('poison');
   const [filteredWeaponList, setFilteredWeaponList] = useState([]);
-  const [inventoryList, setInventoryList] = useState([]);
+  const [inventoryList, setInventoryList] = useState(localStorageInventory);
 
   const Row = styled.div`
     display: flex;
@@ -36,7 +39,6 @@ const WeaponSelect = (props) => {
   const setInventoryFromLocalStorage = () => {
     console.log('Setting inventory from local storage...');
 
-    const localStorageInventory = localStorage.getItem('inventory').split(',');
     //const inventory = this.state.inventoryList;
     const inventory = inventoryList;
 
@@ -72,6 +74,7 @@ const WeaponSelect = (props) => {
     const response = await fetch(url);
     const json = await response.json();
     //this.setState({filteredWeaponList: json});
+    //
     setFilteredWeaponList(json);
   }
 
@@ -83,54 +86,44 @@ const WeaponSelect = (props) => {
     //this.setState({inventoryList: inventory});
 
     console.log('adding: ' + item + ' to inventory');
-    this.setInventoryFromLocalStorage();
-    this.storeInventory();
+    //setInventoryFromLocalStorage();
+    storeInventory();
 
   }
 
   const handleDamageClick = (damageType) => {
     setDamageType(damageType);
   }
-
-  componentDidMount() {
-    this.setInventoryFromLocalStorage();
+  const render = () => {
+    //setWeaponType(weaponType);
+    return (
+      <div>
+        <Row>
+          <Button onClick={getWeaponResults}>Show Results</Button>
+        </Row>
+        <Row>
+          <Inventory handleInventoryItemClick={removeItemFromInventory} inventoryList={inventoryList} />
+          <Wishlist />
+        </Row>
+        <Row >
+          <WeaponTypeList 
+            handleWeaponClick={setWeaponType} 
+            selectedWeaponType={weaponType}
+          />
+          <DamageTypeList 
+            handleDamageClick={handleDamageClick} 
+            selectedDamageType={damageType}
+          />
+          <WeaponList 
+            currentInventory={inventoryList}
+            selectedWeaponList={filteredWeaponList} 
+            inventoryAddAction={addItemToInventory}
+          />
+        </Row>
+      </div>
+    );
   }
-
-  componentDidUpdate(prevProps, prevState) {
-    this.displayWeaponResults();
-  }
-
-  setWeaponType(weaponType) {
-    this.setState({weaponType: weaponType});
-  }
-
-  return(
-    <div>
-      <Row>
-        <Button onClick={getWeaponResults}>Show Results</Button>
-      </Row>
-      <Row>
-        <Inventory handleInventoryItemClick={removeItemFromInventory} inventoryList={state.inventoryList} />
-        <Wishlist />
-      </Row>
-      <Row >
-        <WeaponTypeList 
-          handleWeaponClick={setWeaponType} 
-          selectedWeaponType={weaponType}
-        />
-        <DamageTypeList 
-          handleDamageClick={handleDamageClick} 
-          selectedDamageType={damageType}
-        />
-        <WeaponList 
-          currentInventory={inventoryList}
-          selectedWeaponList={filteredWeaponList} 
-          inventoryAddAction={addItemToInventory}
-        />
-      </Row>
-    </div>
-  );
-
+  return render();
 }
 
 export default WeaponSelect;
