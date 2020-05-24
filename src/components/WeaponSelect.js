@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import DamageTypeList from '../components/DamageTypeList';
 import Inventory from '../components/Inventory';
-import SelectedWeaponList from '../components/SelectedWeaponList';
 import WeaponList from '../components/WeaponList';
 import WeaponTypeList from '../components/WeaponTypeList';
 import Wishlist from '../components/Wishlist';
