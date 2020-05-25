@@ -34,22 +34,25 @@ const Inventory = (props) => {
     props.handleInventoryItemClick(weapon);
   }
 
-  const inventoryContext = useContext(InventoryContext);
-
-  //const inventory = props.inventoryList;
   const inventory = useContext(InventoryContext);
-  const inventoryList = inventory.map((weapon, i ) =>
-    <li key={i}>
-      <span>{weapon} </span>
-      <Button onClick={()=>handleClick(weapon)}> Remove</Button>
-    </li>
-  );
+  console.log(inventory);
+  //console.log('inventory list');
+  //console.log(inventory.inventoryList);
+  if (inventory.inventoryList.size > 0) {
+    const inventoryList = inventory.inventoryList.map((weapon, i ) =>
+      <li key={i}>
+        <span>{weapon} </span>
+        <Button onClick={()=>handleClick(weapon)}> Remove</Button>
+      </li>
+    );
+  } else {
+    const inventoryList = 'empty';
+  }
 
   return(
     <div>
       Inventory
       <Ul>
-        {inventoryList}
       </Ul>
     </div>
   );

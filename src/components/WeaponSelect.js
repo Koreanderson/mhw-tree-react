@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import DamageTypeList from '../components/DamageTypeList';
 import Inventory from '../components/Inventory';
@@ -22,6 +22,11 @@ const WeaponSelect = (props) => {
       return []
     }
   });
+
+  const inventoryContext = useContext(InventoryContext);
+
+  const value = {inventoryList, setInventoryList};
+  console.log(value);
 
   const Row = styled.div`
     display: flex;
@@ -86,12 +91,11 @@ const WeaponSelect = (props) => {
 
     return (
       <div>
-        <InventoryContext.Provider value={inventoryList}>
+        <InventoryContext.Provider value={value}>
           <Row>
             <Button onClick={getWeaponResults}>Show Results</Button>
           </Row>
           <Row>
-            <Inventory handleInventoryItemClick={removeItemFromInventory} />
             <Wishlist />
           </Row>
           <Row >

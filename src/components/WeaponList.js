@@ -25,31 +25,43 @@ const WeaponList = (props) => {
       border-color: #CFEE1D;
     }
   `
-
-  const inventoryContext = useContext(InventoryContext); 
-  console.log('in weapon list');
-  console.log(inventoryContext);
+  const { inventory, setInventory } = useContext(InventoryContext);
+  const inventoryContext = useContext(InventoryContext);
+  const inventoryList = inventoryContext.inventoryList;
 
   const selectedWeaponList = props.selectedWeaponList;
-  const currentInventory = props.currentInventory;
 
-  const addWeaponToInventory = (weapon) => {
+  const addWeaponToInventory = (weapon, inventoryContext) => {
     props.inventoryAddAction(weapon);
-    console.log(inventoryContext);
+    let newInventory = inventoryContext.inventoryList; 
+    newInventory.push(weapon);
+    inventoryContext.setInventoryList(newInventory);
   }
 
+
   const selectedWeaponListEl = selectedWeaponList.map((weapon, i) => {
-    const inInventory = currentInventory.indexOf(weapon.name) > -1;
+    const inInventory = inventoryList.indexOf(weapon.name) > -1;
+
     return( 
+    <InventoryContext.Consumer>
+      {(inventoryContext) => (
       <li key={i}>
         {weapon.name}
         {!inInventory && 
-          <Button weapon={weapon.name} onClick={()=>addWeaponToInventory(weapon.name)}>Add to Inventory</Button>
+          <Button 
+            weapon={weapon.name} 
+            onClick={()=>addWeaponToInventory(weapon.name, inventoryContext )}
+          >
+            Add to Inventory
+          </Button>
         }
         <Button>Add to Wishlist</Button>
       </li>
+      )}
+    </InventoryContext.Consumer>
     )
   });
+
 
   return(
     <InventoryContext.Consumer>
@@ -61,7 +73,6 @@ const WeaponList = (props) => {
     </InventoryContext.Consumer>
   );
 
-  console.log('current inventory:' + currentInventory);
 
 }
 
