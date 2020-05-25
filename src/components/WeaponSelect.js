@@ -20,7 +20,7 @@ const WeaponSelect = (props) => {
     if(localStorageInventory !== null) {
       return localStorageInventory.split(',');
     } else {
-      return 'test'
+      return []
     }
   });
 
