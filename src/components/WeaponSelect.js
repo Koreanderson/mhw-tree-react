@@ -26,7 +26,6 @@ const WeaponSelect = (props) => {
   const inventoryContext = useContext(InventoryContext);
 
   const value = {inventoryList, setInventoryList};
-  console.log(value);
 
   const Row = styled.div`
     display: flex;
@@ -75,11 +74,12 @@ const WeaponSelect = (props) => {
   }
 
   const addItemToInventory = (item) => {
-    let inventory = inventoryList;
-    inventoryList.push(item);
-    setInventoryList(inventory);
-    console.log('adding: ' + item + ' to inventory');
-    console.log(inventoryList);
+    console.log(item);
+    //let inventory = inventoryList;
+    //inventoryList.push(item);
+    //setInventoryList(inventory);
+    //console.log('adding: ' + item + ' to inventory');
+    //console.log(inventoryList);
     storeInventory();
   }
 
@@ -96,6 +96,7 @@ const WeaponSelect = (props) => {
             <Button onClick={getWeaponResults}>Show Results</Button>
           </Row>
           <Row>
+            <Inventory handleInventoryItemClick={removeItemFromInventory} inventoryList={inventoryList} />
             <Wishlist />
           </Row>
           <Row >
@@ -110,7 +111,7 @@ const WeaponSelect = (props) => {
             <WeaponList 
               currentInventory={inventoryList}
               selectedWeaponList={filteredWeaponList} 
-              inventoryAddAction={addItemToInventory}
+              addItemToInventory={addItemToInventory}
             />
           </Row>
         </InventoryContext.Provider>

@@ -32,10 +32,15 @@ const WeaponList = (props) => {
   const selectedWeaponList = props.selectedWeaponList;
 
   const addWeaponToInventory = (weapon, inventoryContext) => {
-    props.inventoryAddAction(weapon);
     let newInventory = inventoryContext.inventoryList; 
-    newInventory.push(weapon);
-    inventoryContext.setInventoryList(newInventory);
+    let inInventory = newInventory.indexOf(weapon) > -1;
+    console.log(inInventory);
+
+    if(!inInventory) {
+      props.addItemToInventory(weapon);
+      newInventory.push(weapon);
+      inventoryContext.setInventoryList(newInventory);
+    }
   }
 
 
