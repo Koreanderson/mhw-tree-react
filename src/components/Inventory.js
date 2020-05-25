@@ -28,9 +28,11 @@ const Inventory = (props) => {
         border-color: #CFEE1D;
       }
     `
+
   const handleClick = (weapon) => {
     props.handleInventoryItemClick(weapon);
   }
+
   const inventory = props.inventoryList;
   const inventoryList = inventory.map((weapon, i ) =>
     <li key={i}>

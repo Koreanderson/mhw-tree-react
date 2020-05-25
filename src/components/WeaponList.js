@@ -35,7 +35,7 @@ const WeaponList = (props) => {
     const inInventory = currentInventory.indexOf(weapon.name) > -1;
     console.log(inInventory);
     return( 
-      <li>
+      <li key={i}>
         {weapon.name}
         {!inInventory && 
           <Button weapon={weapon.name} onClick={()=>addWeaponToInventory(weapon.name)}>Add to Inventory</Button>

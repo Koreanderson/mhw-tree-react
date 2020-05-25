@@ -8,8 +8,6 @@ import Wishlist from '../components/Wishlist';
 
 const WeaponSelect = (props) => {
 
-
-  const localStorageInventory = [];
   const [weaponType, setWeaponType] = useState('great-sword');
   const [damageType, setDamageType] = useState('poison');
   const [filteredWeaponList, setFilteredWeaponList] = useState([]);
@@ -47,18 +45,10 @@ const WeaponSelect = (props) => {
     }
   `
 
+  const localStorageInventory = localStorage.getItem('inventory') ? localStorage.getItem('inventory').split(',') : [];
+
   const removeItemFromInventory = (item) => {
     console.log('removing: ' + item);
-  }
-
-  const setInventoryFromLocalStorage = () => {
-    console.log('setting inventory');
-    console.log(inventoryList);
-    console.log(localStorageInventory);
-    if(inventoryList != localStorageInventory)  {
-      console.log('not equal');
-      //setInventoryList(localStorageInventory);
-    }
   }
 
   const storeInventory = () => {
@@ -80,19 +70,16 @@ const WeaponSelect = (props) => {
 
   const addItemToInventory = (item) => {
     let inventory = inventoryList;
-    inventory.push(item);
+    inventoryList.push(item);
     setInventoryList(inventory);
     console.log('adding: ' + item + ' to inventory');
+    console.log(inventoryList);
     storeInventory();
   }
 
   const handleDamageClick = (damageType) => {
     setDamageType(damageType);
   }
-
-  useEffect(() => {    
-
-  });
 
   const render = () => {
 
