@@ -62,11 +62,11 @@ const WeaponSelect = (props) => {
   }
 
   const storeInventory = () => {
-    const localStorageInventory = localStorage.getItem('inventory').split(',');
-    const inventory = inventoryList;
 
-    if(inventory != localStorageInventory)  {
-      localStorage.setItem('inventory', inventory);
+    const localStorageInventory = localStorage.getItem('inventory') ? localStorage.getItem('inventory').split(',') : [];
+
+    if(inventoryList != localStorageInventory)  {
+      localStorage.setItem('inventory', inventoryList);
     }
     setInventoryList(localStorageInventory);
   }
@@ -81,13 +81,9 @@ const WeaponSelect = (props) => {
   const addItemToInventory = (item) => {
     let inventory = inventoryList;
     inventory.push(item);
-    //setInventoryList(inventory);
-    //this.setState({inventoryList: inventory});
-
+    setInventoryList(inventory);
     console.log('adding: ' + item + ' to inventory');
-    //setInventoryFromLocalStorage();
     storeInventory();
-
   }
 
   const handleDamageClick = (damageType) => {
@@ -100,9 +96,6 @@ const WeaponSelect = (props) => {
 
   const render = () => {
 
-
-    //setInventoryFromLocalStorage();
-    //setWeaponType(weaponType);
     return (
       <div>
         <Row>
