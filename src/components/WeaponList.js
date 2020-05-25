@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import InventoryContext from '../components/InventoryContext';
 
 const WeaponList = (props) => {
   const Ul = styled.ul`
@@ -24,16 +25,21 @@ const WeaponList = (props) => {
       border-color: #CFEE1D;
     }
   `
+
+  const inventoryContext = useContext(InventoryContext); 
+  console.log('in weapon list');
+  console.log(inventoryContext);
+
   const selectedWeaponList = props.selectedWeaponList;
   const currentInventory = props.currentInventory;
 
   const addWeaponToInventory = (weapon) => {
     props.inventoryAddAction(weapon);
+    console.log(inventoryContext);
   }
 
   const selectedWeaponListEl = selectedWeaponList.map((weapon, i) => {
     const inInventory = currentInventory.indexOf(weapon.name) > -1;
-    console.log(inInventory);
     return( 
       <li key={i}>
         {weapon.name}
@@ -46,9 +52,13 @@ const WeaponList = (props) => {
   });
 
   return(
-    <Ul className='weapon-list'>
-      {selectedWeaponListEl}
-    </Ul>
+    <InventoryContext.Consumer>
+      {inventory => (
+      <Ul className='weapon-list'>
+        {selectedWeaponListEl}
+      </Ul>
+      )}
+    </InventoryContext.Consumer>
   );
 
   console.log('current inventory:' + currentInventory);

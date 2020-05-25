@@ -5,13 +5,14 @@ import Inventory from '../components/Inventory';
 import WeaponList from '../components/WeaponList';
 import WeaponTypeList from '../components/WeaponTypeList';
 import Wishlist from '../components/Wishlist';
+import InventoryContext from '../components/InventoryContext';
+
 
 const WeaponSelect = (props) => {
 
   const [weaponType, setWeaponType] = useState('great-sword');
   const [damageType, setDamageType] = useState('poison');
   const [filteredWeaponList, setFilteredWeaponList] = useState([]);
-  //const [inventoryList, setInventoryList] = useState(localStorageInventory);
 
   const [inventoryList, setInventoryList] = React.useState(() => {
     const localStorageInventory = window.localStorage.getItem('inventory');
@@ -85,28 +86,30 @@ const WeaponSelect = (props) => {
 
     return (
       <div>
-        <Row>
-          <Button onClick={getWeaponResults}>Show Results</Button>
-        </Row>
-        <Row>
-          <Inventory handleInventoryItemClick={removeItemFromInventory} inventoryList={inventoryList} />
-          <Wishlist />
-        </Row>
-        <Row >
-          <WeaponTypeList 
-            handleWeaponClick={setWeaponType} 
-            selectedWeaponType={weaponType}
-          />
-          <DamageTypeList 
-            handleDamageClick={handleDamageClick} 
-            selectedDamageType={damageType}
-          />
-          <WeaponList 
-            currentInventory={inventoryList}
-            selectedWeaponList={filteredWeaponList} 
-            inventoryAddAction={addItemToInventory}
-          />
-        </Row>
+        <InventoryContext.Provider value={inventoryList}>
+          <Row>
+            <Button onClick={getWeaponResults}>Show Results</Button>
+          </Row>
+          <Row>
+            <Inventory handleInventoryItemClick={removeItemFromInventory} />
+            <Wishlist />
+          </Row>
+          <Row >
+            <WeaponTypeList 
+              handleWeaponClick={setWeaponType} 
+              selectedWeaponType={weaponType}
+            />
+            <DamageTypeList 
+              handleDamageClick={handleDamageClick} 
+              selectedDamageType={damageType}
+            />
+            <WeaponList 
+              currentInventory={inventoryList}
+              selectedWeaponList={filteredWeaponList} 
+              inventoryAddAction={addItemToInventory}
+            />
+          </Row>
+        </InventoryContext.Provider>
       </div>
     );
   }

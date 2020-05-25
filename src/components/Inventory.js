@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components';
+import InventoryContext from '../components/InventoryContext';
 
 const Inventory = (props) => {
     const Ul = styled.ul`
@@ -33,7 +34,10 @@ const Inventory = (props) => {
     props.handleInventoryItemClick(weapon);
   }
 
-  const inventory = props.inventoryList;
+  const inventoryContext = useContext(InventoryContext);
+
+  //const inventory = props.inventoryList;
+  const inventory = useContext(InventoryContext);
   const inventoryList = inventory.map((weapon, i ) =>
     <li key={i}>
       <span>{weapon} </span>
